@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  test-node-docker:
+    volumes: 
+      - ./code:/app
+    image: test-node-docker
+    build: .
+    ports:
+      - 3000:3000
