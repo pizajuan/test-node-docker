@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const productsController = require('./../controllers/productsController');
+const auth = require('../middleware/auth');
+// const http = require('http-client-ext');
+// console.log(auth);
+// console.log(http);
 
-router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET requests to /products'
-    });
-});
+router.get('/', auth, productsController.ProductsController.getAllProducts);
 
 router.post('/', (req, res, next) => {
     const product = {
