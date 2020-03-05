@@ -22,7 +22,7 @@ const docker_ip = '192.168.56.1';
 // });
 
 mongoose
-    .createConnection('mongodb://'+ docker_ip +':27017/test-node-docker', {
+    .connect('mongodb://'+ docker_ip +':27017/test-node-docker', {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         auth: {

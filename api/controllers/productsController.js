@@ -7,25 +7,23 @@ class ProductsController {
         });
     }
 
-    static createProduct(req, res, next){
+    static async createProduct(req, res, next){
         const product = new Product({
             _id: new mongoose.Types.ObjectId(),
             name: req.body.name,
             price: req.body.price
         });
-        console.log(product);
-        product.save()
-        .then(res => {
-            console.log(res);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-
-        res.status(201).json({
-            message: 'Handling POST requests to /products',
-            product: product
-        });
+        try {
+            await product.save();
+            res.status(201).json({
+                message: 'Handling POST requests to /products',
+                product: product
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: error.message
+            });
+        }
     }
 }
 
