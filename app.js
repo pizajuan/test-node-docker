@@ -10,31 +10,31 @@ const orderRoutes = require('./api/routes/orders.routes');
 // mongoose.connect('mongodb://root:root@localhost:27017/test-node-docker',{ useNewUrlParser: true });
 
 const docker_ip = '192.168.56.1';
-mongoose.connect("mongodb://"+ docker_ip +":27017/test-node-docker", {
-    "user": "root",
-    "pass": "root",
-    "useUnifiedTopology": true,
-    "useNewUrlParser": true,
-})
-.then(() => console.log('DB Connected!'))
-.catch(err => {
-    console.log('Error mongoose: ', err.message);
-});
+// mongoose.connect("mongodb://"+ docker_ip +":27017/test-node-docker", {
+//     "user": "root",
+//     "pass": "root",
+//     "useUnifiedTopology": true,
+//     "useNewUrlParser": true,
+// })
+// .then(() => console.log('DB Connected!'))
+// .catch(err => {
+//     console.log('Error mongoose: ', err.message);
+// });
 
-// mongoose
-//     .connect('mongodb://root:root@'+ docker_ip +':27017/test-node-docker', {
-//         useUnifiedTopology: true,
-//         useNewUrlParser: true,
-//         auth: {
-//             authdb:"admin",
-//             user: 'root',
-//             pass: 'root',
-//         }
-//     })
-//     .then(() => console.log('DB Connected!'))
-//     .catch(err => {
-//         console.log('Error mongoose: ', err.message);
-//     });
+mongoose
+    .createConnection('mongodb://'+ docker_ip +':27017/test-node-docker', {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        auth: {
+            authSource: 'admin'
+        },
+        user: 'root',
+        pass: 'root'
+    })
+    .then(() => console.log('DB Connected!'))
+    .catch(err => {
+        console.log('Error mongoose: ', err.message);
+    });
 
 // esto es un middleware
 // app.use((req, res, next) => {

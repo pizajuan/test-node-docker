@@ -13,14 +13,15 @@ class ProductsController {
             name: req.body.name,
             price: req.body.price
         });
+        console.log(product);
         product.save()
         .then(res => {
             console.log(res);
         })
         .catch(err => {
-            console.error(err);
+            console.log(err);
         });
-        
+
         res.status(201).json({
             message: 'Handling POST requests to /products',
             product: product
