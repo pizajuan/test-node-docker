@@ -1,10 +1,16 @@
 const Product = require('../models/product.model');
 const mongoose = require('mongoose');
 class ProductsController {
-    static getAllProducts(req, res, next){
-        res.status(200).json({
-            message: 'Handling GET requests to /products'
-        });
+    static async getAllProducts(req, res, next){
+        try {
+            const products = await Product.find({});
+            res.status(200).json({
+                message: 'Handling GET requests to /products',
+                result: products
+            });
+          } catch (err) {
+            throw err;
+          }
     }
 
     static async createProduct(req, res, next){

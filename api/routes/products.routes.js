@@ -6,8 +6,8 @@ const auth = require('../middleware/auth');
 // console.log(auth);
 // console.log(http);
 
-// router.get('/', auth, productsController.ProductsController.getAllProducts);
-router.get('/', productsController.ProductsController.getAllProducts);
+router.get('/', auth.verifyToken, productsController.ProductsController.getAllProducts);
+// router.get('/', productsController.ProductsController.getAllProducts);
 
 router.post('/', productsController.ProductsController.createProduct);
 
