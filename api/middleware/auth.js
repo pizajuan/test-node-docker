@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 function verifyToken(req, res, next){
   // try {
   //   const token = req.headers.authorization.split(' ')[1];
-  //   const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+  //   const decodedToken = jwt.verify(token, 'SECRET_TOKEN');
   //   const userId = decodedToken.userId;
   //   if (req.body.userId && req.body.userId !== userId) {
   //     throw 'Invalid user ID';
@@ -16,7 +16,8 @@ function verifyToken(req, res, next){
   //   });
   // }
   const token = req.headers.authorization.split(' ')[1];
-  if (token) {
+  const decodedToken = jwt.verify(token, 'SECRET_TOKEN');
+  if (decodedToken) {
     next();
   } else {
     res.status(401).json({
@@ -24,6 +25,17 @@ function verifyToken(req, res, next){
     });
   }
 };
+
+function authenticate(user) {
+  const payload = {
+    id: user._id,
+    username:  user.username
+  };
+  const token = jwt.sign(payload, 'SECRET_TOKEN', {
+    expiresIn: 1440
+  });
+  return token;
+}
 
 // module.exports = (req, res, next) => {
 //   try {
@@ -43,3 +55,4 @@ function verifyToken(req, res, next){
 // };
 
 module.exports.verifyToken = verifyToken;
+module.exports.authenticate = authenticate;

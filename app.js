@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products.routes');
 const orderRoutes = require('./api/routes/orders.routes');
+const authRoutes = require('./api/routes/authentication.routes');
 
 // mongoose.connect('mongodb://root:root@localhost:27017/test-node-docker',{ useNewUrlParser: true });
 
@@ -50,6 +51,7 @@ app.use(bodyParser.json());
 // Rutas que deben manejar los request
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/auth', authRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
