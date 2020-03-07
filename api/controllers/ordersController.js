@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 class OrdersController {
     static async findAll(req, res, next){
         try {
-            const orders = await Order.find({});
+            const orders = await Order.find({}).populate('products');
             res.status(200).json({
                 message: 'Handling GET requests to /orders',
                 result: orders
@@ -34,7 +34,7 @@ class OrdersController {
     static async create(req, res, next){
         const order = new Order({
             _id: new mongoose.Types.ObjectId(),
-            products: req.products
+            products: req.body.products
         });
         try {
             await order.save();
