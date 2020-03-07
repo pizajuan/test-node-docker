@@ -8,9 +8,11 @@ const productRoutes = require('./api/routes/products.routes');
 const orderRoutes = require('./api/routes/orders.routes');
 const authRoutes = require('./api/routes/authentication.routes');
 
+const config = require('./config');
+
 // mongoose.connect('mongodb://root:root@localhost:27017/test-node-docker',{ useNewUrlParser: true });
 
-const docker_ip = '192.168.56.1';
+const docker_ip = '172.17.0.1';
 // mongoose.connect("mongodb://"+ docker_ip +":27017/test-node-docker", {
 //     "user": "root",
 //     "pass": "root",
@@ -29,8 +31,8 @@ mongoose
         auth: {
             authSource: 'admin'
         },
-        user: 'root',
-        pass: 'root'
+        user: config.DBUser,
+        pass: config.DBPass
     })
     .then(() => console.log('DB Connected!'))
     .catch(err => {

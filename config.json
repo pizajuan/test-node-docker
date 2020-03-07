@@ -1,0 +1,5 @@
+{
+	"DBUser": "root",
+	"DBPass": "root",
+	"SecretToken": "SECRET_TOKEN"
+}
