@@ -9,7 +9,23 @@ class ProductsController {
                 result: products
             });
           } catch (err) {
-            throw err;
+            res.status(500).json({
+                message: err.message
+            });
+          }
+    }
+
+    static async getProduct(req, res, next){
+        try {
+            const product = await Product.findById(req.params.id);
+            res.status(200).json({
+                message: 'Handling GET requests to /products',
+                result: product
+            });
+          } catch (err) {
+            res.status(500).json({
+                message: err.message
+            });
           }
     }
 
@@ -23,13 +39,41 @@ class ProductsController {
             await product.save();
             res.status(201).json({
                 message: 'Handling POST requests to /products',
-                product: product
+                result: product
             });
         } catch (error) {
             res.status(500).json({
                 message: error.message
             });
         }
+    }
+
+    static async updateProduct(req, res, next){
+        try {
+            await Product.findByIdAndUpdate(req.params.id, req.body);
+            const productUpdated = await Product.findById(req.params.id);
+            res.status(200).json({
+                message: 'Handling PATCH requests to /products',
+                result: productUpdated
+            });
+          } catch (err) {
+            res.status(500).json({
+                message: err.message
+            });
+          }
+    }
+
+    static async deleteProduct(req, res, next){
+        try {
+            await Product.findByIdAndDelete(req.params.id);
+            res.status(204).json({
+                message: 'Handling DELETE requests to /products'
+            });
+          } catch (err) {
+            res.status(500).json({
+                message: err.message
+            });
+          }
     }
 }
 

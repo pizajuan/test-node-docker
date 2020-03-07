@@ -19,7 +19,7 @@ function authenticate(user) {
     username:  user.username
   };
   const token = jwt.sign(payload, config.SecretToken, {
-    expiresIn: 1440
+    expiresIn: 3600
   });
   return token;
 }

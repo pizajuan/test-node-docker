@@ -39,13 +39,6 @@ mongoose
         console.log('Error mongoose: ', err.message);
     });
 
-// esto es un middleware
-// app.use((req, res, next) => {
-//     res.status(200).json({
-//         message: 'It works!'
-//     });
-// });
-
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
