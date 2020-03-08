@@ -1,23 +1,14 @@
 const Product = require('../models/product.model');
 const Order = require('../models/order.model');
 const mongoose = require('mongoose');
+const apiController = require('./apiController');
 
 class OrdersController {
     static async findAll(req, res, next){
         try {
-            const orders = Order.find({});
+            let orders = Order.find({});
             console.log(req.query);
-            if (req.query.populate) {
-                console.log(req.query.populate);
-                if (typeof req.query.populate == 'string') {
-                    orders.populate(req.query.populate);
-                }
-                if (Array.isArray(req.query.populate)) {
-                    req.query.populate.array.forEach(populateElem => {
-                        orders.populate(populateElem);
-                    });
-                }         
-            }
+            orders = apiController.APIController.checkParams(orders, req.query);
             const orderResult = await orders.exec();
             res.status(200).json({
                 message: 'Handling GET requests to /orders',
