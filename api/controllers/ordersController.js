@@ -5,10 +5,23 @@ const mongoose = require('mongoose');
 class OrdersController {
     static async findAll(req, res, next){
         try {
-            const orders = await Order.find({}).populate('products');
+            const orders = Order.find({});
+            console.log(req.query);
+            if (req.query.populate) {
+                console.log(req.query.populate);
+                if (typeof req.query.populate == 'string') {
+                    orders.populate(req.query.populate);
+                }
+                if (Array.isArray(req.query.populate)) {
+                    req.query.populate.array.forEach(populateElem => {
+                        orders.populate(populateElem);
+                    });
+                }         
+            }
+            const orderResult = await orders.exec();
             res.status(200).json({
                 message: 'Handling GET requests to /orders',
-                result: orders
+                result: orderResult
             });
           } catch (err) {
             res.status(500).json({
