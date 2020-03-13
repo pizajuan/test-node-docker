@@ -7,23 +7,11 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products.routes');
 const orderRoutes = require('./api/routes/orders.routes');
 const authRoutes = require('./api/routes/authentication.routes');
+const firebaseRoutes = require('./api/routes/firebase.routes');
 
 const config = require('./config');
 
-// mongoose.connect('mongodb://root:root@localhost:27017/test-node-docker',{ useNewUrlParser: true });
-
 const docker_ip = '172.17.0.1';
-// mongoose.connect("mongodb://"+ docker_ip +":27017/test-node-docker", {
-//     "user": "root",
-//     "pass": "root",
-//     "useUnifiedTopology": true,
-//     "useNewUrlParser": true,
-// })
-// .then(() => console.log('DB Connected!'))
-// .catch(err => {
-//     console.log('Error mongoose: ', err.message);
-// });
-
 mongoose
     .connect('mongodb://'+ docker_ip +':27017/test-node-docker', {
         useUnifiedTopology: true,
@@ -47,6 +35,7 @@ app.use(bodyParser.json());
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/auth', authRoutes);
+app.use('/firebase', firebaseRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
