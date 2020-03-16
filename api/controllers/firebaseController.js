@@ -14,7 +14,7 @@ class FirebaseController {
                         "age": 30,
                         "gender": "M"
                     },
-                    "notification": {
+                    "notification": { //Se envia solo si queremos mostrar la notificacion en la pantalla
                         "title": "Nuevo Mensaje",
                         "body": "Te llegó toda la Info"
                     },
@@ -45,6 +45,40 @@ class FirebaseController {
                 message: err.message
             });
         }
+    }
+
+    static async createProduct(req, res, next) {
+        // https://www.jeansnyman.com/posts/google-firestore-rest-api-examples/
+        const product = req.body;
+        console.log(product);
+        const headers = {
+            'Content-Type': 'application/json',
+        }
+
+        const response = await fetch('https://firestore.googleapis.com/v1/projects/test-teekit/databases/(default)/documents/products', {
+            method: 'post',
+            body: JSON.stringify(product),
+            headers: headers
+        });
+        const data = await response.json();
+        res.status(200).json({
+            message: 'Handling GET requests to /products/create',
+            result: data
+        });
+    }
+
+    static async listProducts(req, res, next) {
+        // const product = req.body.product;
+        console.log('list products');
+
+        const response = await fetch('https://firestore.googleapis.com/v1/projects/test-teekit/databases/(default)/documents/products', {
+            method: 'get'
+        });
+        const data = await response.json();
+        res.status(200).json({
+            message: 'Handling GET requests to /products/list',
+            result: data
+        });
     }
 }
 
